@@ -6,8 +6,8 @@ function computerPlay() {
     return options[n];
 }
 
-function playRound() {
-    const a = prompt('Ready?').toLowerCase();
+function playRound(playerSelection, computerSelection) {
+    const a = playerSelection;
     console.log(a)
     const b = computerPlay();
     console.log(b)
@@ -62,3 +62,24 @@ function game() {
 document.querySelector('.playButton').addEventListener('click', function() {
     game()
 })
+
+const rockSelected = document.querySelector('.rock')
+const scissorsSelected = document.querySelector('.scissors')
+const paperSelected = document.querySelector('.paper')
+
+rockSelected.addEventListener('click', ()=>{
+    playRound(playerSelection='rock', computerSelection=computerPlay())
+    console.log('rock sele')
+})
+
+paperSelected.addEventListener('click', ()=>{
+    playRound(playerSelection='paper', computerSelection=computerPlay())
+    console.log('paper sele')
+})
+
+scissorsSelected.addEventListener('click', ()=>{
+    playRound(playerSelection='scissors', computerSelection=computerPlay())
+    console.log('scissors sele')
+})
+
+const resultDiv = document.querySelector('result')
