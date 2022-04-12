@@ -5,48 +5,119 @@ function computerPlay() {
     const options = ['rock','paper','scissors']
     return options[n];
 }
-
+const gameResult = ""
+const playerScoreHeading = document.querySelector('.player-score')
+const computerScoreHeading = document.querySelector('.computer-score')
+let playerScore = 0;
+let computerScore = 0;
+function declareGameLost() {
+    resultDiv.innerHTML = "";
+    const resultHeading = document.createElement('h1')
+    resultDiv.appendChild(resultHeading)
+    resultHeading.textContent = "GAME OVER!\nYOU LOST. I'M TAKING ALL YOUR COOKIES."
+}
+function declareGameWon() {
+    resultDiv.innerHTML = "";
+    const resultHeading = document.createElement('h1')
+    resultDiv.appendChild(resultHeading)
+    resultHeading.textContent = "CONGRATS! YOU WON $1M WORTH OF COOKIES."
+}
+function resetScores() {
+    playerScore = 0;
+    computerScore = 0;
+    playerScoreHeading.textContent = 0;
+    computerScoreHeading.textContent = 0;
+}
 function playRound(playerSelection, computerSelection) {
+
+    const resultHeading = document.createElement('h1')
+    resultHeading.classList.add('resultText')
+    // resultDiv.removeChild();
     const a = playerSelection;
     console.log(a)
     const b = computerPlay();
     console.log(b)
-
-    if (a == 'rock' && b == 'rock') {
-        console.log('draw')
-        return 'draw'
+    if (playerSelection == computerSelection) {
+        resultHeading.textContent = "DRAW!"
+        resultDiv.appendChild(resultHeading)
+        return
     } else if (a == 'rock' && b == 'paper') {
-        console.log('lose')
-
-        return 'lose'
+        resultHeading.textContent = "LOSE!"
+        resultDiv.appendChild(resultHeading)
+        computerScore += 1;
+        playerScoreHeading.textContent = playerScore;
+        if (computerScore > 4) {
+            declareGameLost();
+            resetScores()
+        }
+        resetScores()
+        return
     } else if (a == 'rock' && b == 'scissors') {
-        console.log('win')
-
-        return 'win'
-    } else if (a == 'scissors' && b == 'scissors') {
-        console.log('draw')
-
-        return 'draw'
+        playerScore += 1;
+        playerScoreHeading.textContent = playerScore;
+        resultHeading.textContent = "WIN!"
+        resultDiv.appendChild(resultHeading)
+        if (playerScore > 4) {
+            declareGameWon();
+            resetScores()
+        }
+        
+        return
     } else if (a == 'scissors' && b == 'paper') {
-        console.log('win')
+        playerScore += 1;
+        playerScoreHeading.textContent = playerScore;
+        resultHeading.textContent = "WIN!"
+        resultDiv.appendChild(resultHeading)
+        if (playerScore > 4) {
+            declareGameWon();
+            resetScores()
 
-        return 'win'
+        }
+        return
     } else if (a == 'scissors' && b == 'rock') {
-        console.log('lose')
+        computerScore += 1;
+        computerScoreHeading.textContent = computerScore;
+        resultHeading.textContent = "LOSE!"
+        resultDiv.appendChild(resultHeading)
+        if (computerScore > 4) {
+            declareGameLost();
+            resetScores()
 
-        return 'lose'
-    } else if (a == 'paper' && b == 'paper') {
-        console.log('draw')
-
-        return 'draw'
+        }
+        return
     } else if (a == 'paper' && b == 'scissors') {
-        console.log('lose')
+        computerScore += 1;
+        computerScoreHeading.textContent = computerScore;
 
-        return 'lose'
+        resultHeading.textContent = "LOSE!"
+        resultDiv.appendChild(resultHeading)
+        if (computerScore > 4) {
+            declareGameLost();
+            resetScores()
+
+        }
+        return
+    } else if (a == 'paper' && b == 'rock') {
+        playerScore += 1;
+        playerScoreHeading.textContent = playerScore;
+        resultHeading.textContent = "WIN!"
+        resultDiv.appendChild(resultHeading)
+        if (playerScore > 4) {
+            declareGameWon();
+            resetScores()
+
+        }
     } else {
-        console.log('win')
+        computerScore += 1;
+        computerScoreHeading.textContent = computerScore;
+        resultHeading.textContent = "LOSE!"
+        resultDiv.appendChild(resultHeading)
+        if (computerScore > 4) {
+            declareGameLost();
+            resetScores()
 
-        return 'win'
+        }
+        return
     }
     console.log(playRound())
 }
@@ -59,17 +130,19 @@ function game() {
 }
 
 
-document.querySelector('.playButton').addEventListener('click', function() {
-    game()
-})
+// document.querySelector('.playButton').addEventListener('click', function() {
+//     game()
+// })
 
 const rockSelected = document.querySelector('.rock')
 const scissorsSelected = document.querySelector('.scissors')
 const paperSelected = document.querySelector('.paper')
+const resultDiv = document.querySelector('.result')
 
 rockSelected.addEventListener('click', ()=>{
     playRound(playerSelection='rock', computerSelection=computerPlay())
     console.log('rock sele')
+
 })
 
 paperSelected.addEventListener('click', ()=>{
@@ -82,4 +155,3 @@ scissorsSelected.addEventListener('click', ()=>{
     console.log('scissors sele')
 })
 
-const resultDiv = document.querySelector('result')
